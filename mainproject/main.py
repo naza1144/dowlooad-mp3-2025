@@ -1,19 +1,30 @@
 import yt_dlp
+from tkinter import *
 
-# URL ของวิดีโอ YouTube
-url = "https://youtu.be/5qLuDY7ORTU?si=cdHhNFxwPJJeaDYW"
+root = Tk() 
+root.title("ดาวน์โหลดเพลง")
 
-# ตั้งค่าการดาวน์โหลดเฉพาะเสียง
-ydl_opts = {
-    'format': 'bestaudio/best',
-    'outtmpl': 'songall/%(title)s.%(ext)s',  # บันทึกเป็นชื่อวิดีโอ
-    'postprocessors': [{
-        'key': 'FFmpegExtractAudio',
-        'preferredcodec': 'mp3',  # แปลงเป็น MP3
-        'preferredquality': '192',  # คุณภาพ 192kbps
-    }],
-}
+mylable = Label(root, text="ใส่ลิงค์ที่นี้", font=("Arial", 25)).pack()
 
-# ดาวน์โหลดไฟล์เสียง
-with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-    ydl.download([url])
+e = Entry(root, width=50)
+e.pack()
+
+def downloadmusic():
+    url = e.get()
+    ydl_opts = {
+        'format': 'bestaudio/best',
+        'outtmpl': 'song-all/%(title)s.%(ext)s',  
+        'postprocessors': [{
+            'key': 'FFmpegExtractAudio',
+            'preferredcodec': 'mp3',  
+            'preferredquality': '192',  
+        }],
+    }
+    with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+        ydl.download([url])
+        
+
+Button(root, text="ดาวน์โหลด", font=("Arial", 15), command=downloadmusic).pack()
+
+root.geometry("500x480")
+root.mainloop()
