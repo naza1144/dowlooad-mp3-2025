@@ -10,3 +10,6 @@
  - install tkinter by pip install tkinter in powershell as adadministrator
 
  step four run this code
+
+
+or tou can dowlode my exe.zip for use not un code
