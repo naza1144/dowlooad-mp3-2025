@@ -1,0 +1,14 @@
+# ผลลัพธ์จาก PyInstaller
+build/
+dist/
+*.spec.bak
+
+# เพลงที่โหลดมา (เก็บแค่โฟลเดอร์ไว้)
+song-all/*
+!song-all/.txt
+
+# Python
+__pycache__/
+*.py[cod]
+venv/
+.venv/

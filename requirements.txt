@@ -1,0 +1,3 @@
+# อัปเดตบ่อยๆ ด้วย: pip install -U -r requirements.txt
+# yt-dlp ต้องเป็นเวอร์ชันใหม่เสมอ ไม่งั้น YouTube จะโหลดไม่ได้
+yt-dlp>=2026.8.19

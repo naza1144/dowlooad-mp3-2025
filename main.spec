@@ -1,12 +1,16 @@
 # -*- mode: python ; coding: utf-8 -*-
+# build ด้วย: pyinstaller main.spec   (รันจากโฟลเดอร์หลักของโปรเจกต์)
 
+import os
+
+icon = 'icon.ico' if os.path.exists('icon.ico') else None
 
 a = Analysis(
-    ['main.py'],
-    pathex=[],
+    ['mainproject/main.py'],
+    pathex=['mainproject'],          # ให้หา downloader.py เจอ
     binaries=[],
     datas=[],
-    hiddenimports=[],
+    hiddenimports=['downloader'],
     hookspath=[],
     hooksconfig={},
     runtime_hooks=[],
@@ -29,11 +33,11 @@ exe = EXE(
     upx=True,
     upx_exclude=[],
     runtime_tmpdir=None,
-    console=True,
+    console=False,                   # ไม่ต้องมีหน้าต่างดำโผล่คู่กับ GUI
     disable_windowed_traceback=False,
     argv_emulation=False,
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
-    icon=['icon.ico'],
+    icon=icon,
 )
