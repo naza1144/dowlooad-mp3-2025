@@ -89,7 +89,7 @@ class App:
         self.write(f"เพลงจะถูกเก็บไว้ที่: {downloader.output_dir()}")
         if downloader.find_ffmpeg() is None:
             self.write("WARNING: หา ffmpeg ไม่เจอ — จะแปลงเป็น mp3 ไม่ได้")
-            self.write("         ติดตั้งด้วย: choco install ffmpeg  (หรือวาง ffmpeg.exe ไว้ข้างๆ โปรแกรมนี้)")
+            self.write("         ติดตั้งด้วย: winget install Gyan.FFmpeg  (หรือวาง ffmpeg.exe ไว้ข้างๆ โปรแกรมนี้)")
 
         self.root.after(100, self.drain_log)
 
@@ -140,7 +140,9 @@ class App:
         if downloader.find_ffmpeg() is None:
             messagebox.showerror("ไม่พบ ffmpeg",
                                  "ต้องติดตั้ง ffmpeg ก่อนถึงจะแปลงเป็น mp3 ได้\n\n"
-                                 "เปิด PowerShell แบบ Administrator แล้วพิมพ์:\nchoco install ffmpeg")
+                                 "เปิด PowerShell แล้วพิมพ์:\nwinget install Gyan.FFmpeg\n\n"
+                                 "แล้วปิด-เปิดโปรแกรมใหม่อีกครั้ง\n"
+                                 "(หรือวาง ffmpeg.exe ไว้ข้างๆ โปรแกรมนี้ก็ได้)")
             return
 
         self.set_busy(True, "กำลังดาวน์โหลด...")

@@ -15,13 +15,16 @@
 
 ### 1. ffmpeg (จำเป็น ไม่มีตัวนี้แปลง mp3 ไม่ได้)
 
-บน Windows ใช้ [Chocolatey](https://chocolatey.org/install) ง่ายสุด — เปิด PowerShell **แบบ Run as Administrator** แล้วพิมพ์:
+บน Windows ใช้ `winget` ง่ายสุด (มีมาให้อยู่แล้วใน Windows 10/11 ไม่ต้องใช้สิทธิ์ Administrator):
 
 ```powershell
-choco install ffmpeg
+winget install Gyan.FFmpeg
 ```
 
-ถ้าไม่อยากลง choco ก็โหลด `ffmpeg.exe` มาวางไว้ข้างๆ ตัวโปรแกรมได้เลย โปรแกรมหาเจอเอง
+ติดตั้งเสร็จต้อง **เปิดหน้าต่าง PowerShell ใหม่** ก่อน PATH ถึงจะอัปเดต
+
+ถ้าไม่อยากลงในเครื่อง ก็โหลด `ffmpeg.exe` มาวางไว้ข้างๆ ตัวโปรแกรมได้เลย โปรแกรมหาเจอเอง
+(ถ้า build เป็น .exe แล้ว ให้วางไว้ในโฟลเดอร์ `dist/` ที่เดียวกับ `main.exe`)
 
 ### 2. Python package
 
@@ -56,7 +59,7 @@ yt-dlp รุ่นใหม่ต้องใช้ JS runtime ในการ�
 และบางคลิปอาจโหลดไม่ได้ ติดตั้ง deno เพิ่มก็หายแล้ว:
 
 ```powershell
-choco install deno
+winget install DenoLand.Deno
 ```
 
 ---
@@ -80,10 +83,19 @@ python mainproject/main.py     # Windows
 
 ```bash
 pip install pyinstaller
-pyinstaller main.spec
+python -m PyInstaller main.spec --noconfirm
 ```
 
 ได้ไฟล์ที่ `dist/main.exe` (ถ้าอยากได้ไอคอน ให้เอา `icon.ico` มาวางไว้ที่โฟลเดอร์หลักก่อน build)
+
+> ใช้ `python -m PyInstaller` แทนการพิมพ์ `pyinstaller` เฉยๆ จะชัวร์กว่า เพราะบางเครื่อง
+> โฟลเดอร์ `Scripts` ของ Python ไม่ได้อยู่ใน PATH เลยเรียก `pyinstaller` ตรงๆ ไม่เจอ
+>
+> ถ้าเจอ `PermissionError: [WinError 5] Access is denied` แปลว่า `main.exe` ตัวเก่ายังเปิดค้างอยู่
+> ปิดโปรแกรมให้หมดก่อนแล้ว build ใหม่
+
+**ffmpeg ไม่ได้ถูกรวมเข้าไปใน .exe** — ตัวโปรแกรมหา ffmpeg ตอนรัน ถ้าจะเอา `.exe` ไปแจกให้คนอื่น
+ต้องเอา `ffmpeg.exe` ไปวางคู่กันในโฟลเดอร์เดียวกันด้วย ไม่งั้นเครื่องปลายทางที่ไม่มี ffmpeg จะแปลง mp3 ไม่ได้
 
 ---
 
@@ -93,6 +105,7 @@ pyinstaller main.spec
 |---|---|
 | `The page needs to be reloaded` / `Sign in to confirm` | yt-dlp เก่าไป — `pip install -U yt-dlp` |
 | แปลงเป็น mp3 ไม่ได้ / ได้ไฟล์ `.webm` | ยังไม่ได้ลง ffmpeg (ดูข้อ 1) |
+| ขึ้นกล่อง `ไม่พบ ffmpeg` ทั้งที่ลงไปแล้ว | โปรแกรมอ่าน PATH ตั้งแต่ตอนเปิด ต้องปิดแล้วเปิดใหม่ ถ้ายังไม่หายให้รีสตาร์ทเครื่อง |
 | `No supported JavaScript runtime` | ลง deno (ดูข้อ 3) |
 | `error: externally-managed-environment` | Debian/Ubuntu ต้องใช้ venv (ดูข้อ 2) |
 | `ModuleNotFoundError: No module named 'tkinter'` | `sudo apt install python3-tk` |
